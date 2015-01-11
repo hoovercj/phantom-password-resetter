@@ -51,6 +51,10 @@ var websites = {
         "url": "https://www.tumblr.com/forgot_password",
         "form": "form[action='/forgot_password']",
         "input": "input[name='email']"
+    }, "todoist": {
+        "url": "https://todoist.com/Users/forgotPassword",
+        "form": "form[action='/Users/sendResetPassword']",
+        "input": "input[name='email']"
     }
 };
 

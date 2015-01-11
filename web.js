@@ -16,14 +16,11 @@ var websites = {
         "url": "https://www.dropbox.com/forgot",
         "form": "form.password-reset-form",
         "input": "input[name='email']"
-    }, "etsy": {
-        "url": "https://www.etsy.com/forgot_password.php",
-        "form": 
     }, "github": {
         "url": "https://github.com/password_reset",
         "form": "form[action='/password_reset']",
         "input": "input[name='email']"
-    }, " hackernews": {
+    }, "hackernews": {
         "url": "https://news.ycombinator.com/forgot?id=",
         "form": "form[action='/x']",
         "input": "input"

@@ -22,15 +22,6 @@ var spooky = new Spooky({
             e.details = err;
             throw e;
         }
-
-        spooky.start(
-            'http://en.wikipedia.org/wiki/Spooky_the_Tuff_Little_Ghost');
-        spooky.then(function () {
-            this.emit('hello', 'Hello, from ' + this.evaluate(function () {
-                return document.title;
-            }));
-        });
-        spooky.run();
     });
 
 spooky.on('error', function (e, stack) {
@@ -40,6 +31,19 @@ spooky.on('error', function (e, stack) {
         console.log(stack);
     }
 });
+
+function spookyTest() {
+    console.log('In spooky test');
+    spooky.start('http://en.wikipedia.org/wiki/Spooky_the_Tuff_Little_Ghost');
+    spooky.then(function () {
+        this.emit('hello', 'Hello, from ' + this.evaluate(function () {
+            return document.title;
+        }));
+    });
+    spooky.run();
+    console.log('Spooky.run called');
+}
+
 
 /*
 // Uncomment this block to see all of the things Casper has to say.
@@ -65,7 +69,7 @@ spooky.on('log', function (log) {
 
 app.use(express.logger());
 app.get('/', function(request, response) {
-    response.send(gGreeting);
+    spookyTest();
 });
 
 var port = process.env.PORT || 5000;

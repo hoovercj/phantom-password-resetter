@@ -22,7 +22,7 @@ var websites = {
 
 var spooky = [];
 
-function initializeSpooky () {
+function resetAllWebsites (email) {
     spooky = new Spooky({
         child: {
             transport: 'http'
@@ -37,6 +37,13 @@ function initializeSpooky () {
             e.details = err;
             throw e;
         }
+
+        spooky.start();
+        var keys = Object.keys(websites);
+        for (var i=keys.length; i--;) {
+            addWebsiteStep(email, websites[keys[i]]);
+        }
+        spooky.run();
     });
 
     spooky.on('error', function (e, stack) {
@@ -94,8 +101,7 @@ function addWebsiteStep(email, website) {
     });
 }
 
-function resetAllWebsites(email) {
-    initializeSpooky();
+function resetAllWebsitesHelper(email) {
     spooky.start();
     var keys = Object.keys(websites);
     for (var i=keys.length; i--;) {
@@ -103,6 +109,7 @@ function resetAllWebsites(email) {
     }
     spooky.run();
 }
+
 /*
 // Uncomment this block to see all of the things Casper has to say.
 // There are a lot.

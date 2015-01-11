@@ -48,7 +48,7 @@ function resetAllWebsites(email) {
         email: email
     }, function () {
          this.fill('form[class="password-reset-form"]', { 'email': email }, true);
-    });
+    }]);
     spooky.then(function () {
       this.echo(this.getCurrentUrl());
     });

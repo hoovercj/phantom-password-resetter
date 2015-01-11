@@ -1,6 +1,9 @@
 {
   "name": "casper-node",
   "version": "0.0.1",
+  "scripts": {
+    "start": "node web.js"
+  },
   "dependencies": {
     "express": "3.1.x",
     "spooky": "0.2.x"

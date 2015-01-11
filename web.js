@@ -93,6 +93,7 @@ function resetAllWebsites (email) {
 }
 
 function resetWebsite(email, website) {
+    console.log("Reset " + email + ": " + JSON.stringify(website));
     spooky = new Spooky({
         child: {
             transport: 'http'
@@ -170,12 +171,12 @@ app.get('/', function(reques, response) {
 });
 
 // Web Server TEST Method Block
-app.get('/resetpassword/test/', function(req, resp) {  
+app.get('/resetpassword/test/', function(req, response) {  
     var resetEmail = req.param('email');
     var testSite = req.param('site');
-    resetWebsite(resetEmail, websites[testSite]);
     console.log('TEST: Resetting password for ' + resetEmail + " for " + testSite);
-    respond(resp, "Test: resetting password for " + resetEmail + " at the site " + testSite);
+    resetWebsite(resetEmail, websites[testSite]);
+    response.send("Test: resetting password for " + resetEmail + " at the site " + testSite);
 });
 
 app.get('/resetpassword/:email', function(request, response) {

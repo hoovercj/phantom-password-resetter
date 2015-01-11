@@ -8,7 +8,7 @@ var Spooky = require('spooky');
 // [Getting Started]: https://devcenter.heroku.com/articles/getting-started-with-nodejs
 // [Spooky]: https://github.com/WaterfallEngineering/SpookyJS
 
-var websites = {
+var websitesOld = {
     dropbox: {
         url: 'https://www.dropbox.com/forgot',
         form: 'form.password-reset-form',
@@ -18,7 +18,16 @@ var websites = {
         form: "form[action='/forgot']",
         input: "input[name='user[email]']"
     }
-}
+};
+
+var websites = {
+    ifttt: {
+        url: 'https://ifttt.com/forgot',
+        form: "form[action='/forgot']",
+        input: "input[name='user[email]']"
+    }
+};
+
 
 var spooky = new Spooky({
         child: {
@@ -71,8 +80,7 @@ function resetAllWebsitesOLD(email) {
 function addWebsiteStep(email, website) {
     var data = {};
     data[website.input] = email;
-    console.log('addWebsiteStep for ' + email + " - " + website.url);
-    console.log('Data object: ' + JSON.stringify(data));
+    console.log('addWebsiteStep for ' + email + " - " + website.url + " - " + JSON.stringify(data));    
     spooky.thenOpen(website.url);
     spooky.then([{        
         form: website.form,

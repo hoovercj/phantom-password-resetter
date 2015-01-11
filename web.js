@@ -69,7 +69,7 @@ function resetAllWebsitesOLD(email) {
 }
 
 function addWebsiteStep(email, website) {
-    var data = [];
+    var data = {};
     data[website.input] = email;
     console.log('addWebsiteStep for ' + email + " - " + website.url);
     console.log('Data object: ' + JSON.stringify(data));

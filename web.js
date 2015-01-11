@@ -81,7 +81,7 @@ app.get('/', function(reques, response) {
 });
 
 app.get('/resetpassword/:email', function(request, response) {
-    resetEmail = req.param('email');
+    resetEmail = request.param('email');
     resetAllWebsites(resetEmail);
     console.log('Resetting all passwords for: ' + resetEmail);
     response.send('Resetting all passwords for: ' + resetEmail);

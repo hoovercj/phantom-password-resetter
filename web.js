@@ -78,7 +78,7 @@ function addWebsiteStep(email, website) {
         data: data,
     }, function() {        
         this.fillSelectors(form, data, true);
-        console.log("in 'then' with data: " + JSON.stringify(data));
+        console.log("FILL: " + form  + " WITH: " + JSON.stringify(data));
     }]);
 }
 

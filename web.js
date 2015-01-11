@@ -76,7 +76,7 @@ spooky.on('log', function (log) {
 app.use(express.logger());
 
 // Web Server Method Block
-app.get('/', function(req, resp) {  
+app.get('/', function(reques, response) {  
     response.send('Hello. Use the endpoint /resetpassword/:email to reset emails');
 });
 

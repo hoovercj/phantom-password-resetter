@@ -8,6 +8,18 @@ var Spooky = require('spooky');
 // [Getting Started]: https://devcenter.heroku.com/articles/getting-started-with-nodejs
 // [Spooky]: https://github.com/WaterfallEngineering/SpookyJS
 
+var websites = {
+    dropbox: {
+        url: 'https://www.dropbox.com/forgot',
+        form: 'form.password-reset-form',
+        input: 'input[name="email"]'
+    }, ifttt: {
+        url: 'https://ifttt.com/forgot',
+        form: 'form[action="/forgot"]',
+        email: 'user[email]'
+    }
+}
+
 var spooky = new Spooky({
         child: {
             transport: 'http'
@@ -32,7 +44,7 @@ spooky.on('error', function (e, stack) {
     }
 });
 
-function resetAllWebsites(email) {
+function resetAllWebsitesOLD(email) {
     console.log('In resetAllWebsites for: ' + email);
     spooky.start('https://ifttt.com/forgot');
     spooky.then([{ 
@@ -56,6 +68,28 @@ function resetAllWebsites(email) {
     console.log('Spooky.run called');
 }
 
+function addWebsiteStep(email, website) {
+    var data = [];
+    data[website.input] = email;
+    console.log('addWebsiteStep for ' + email + " - " + website.url);
+    console.log('Data object: ' + JSON.stringify(data));
+    spooky.then([{        
+        form: website.form,
+        data: data,
+    }, function() {        
+        this.fillSelectors(form, data, true);
+        console.log("in 'then' with data: " + JSON.stringify(data));
+    }]);
+}
+
+function resetAllWebsites(email) {
+    spooky.start();
+    var keys = Object.keys(websites);
+    for (var i=keys.length; i--;) {
+        addWebsiteStep(email, websites[keys[i]]);
+    }
+    spooky.run();
+}
 /*
 // Uncomment this block to see all of the things Casper has to say.
 // There are a lot.

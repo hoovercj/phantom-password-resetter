@@ -36,7 +36,7 @@ function spookyTest() {
     console.log('In spooky test');
     spooky.start('https://ifttt.com/forgot');
     spooky.then(function () {
-         this.fill('form[action="/forgot"]', { 'user[email': 'login@codyhoover.com' }, true);
+         this.fill('form[action="/forgot"]', { 'user[email]': 'login@codyhoover.com' }, true);
     });
     spooky.then(function () {
       this.echo(this.getPageContent());

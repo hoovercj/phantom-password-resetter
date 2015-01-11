@@ -30,7 +30,7 @@ var websites = {
         "input": "input[name='email']"
     }, "pinterest": {
         "url": "https://www.pinterest.com/password/reset/",
-        "form": "form.standard-form",
+        "form": "form.standardForm",
         "input": "input[name='email']"
     }, "tumblr": {
         "url": "https://www.tumblr.com/forgot_password",

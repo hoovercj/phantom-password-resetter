@@ -89,6 +89,9 @@ function addWebsiteStep(email, website) {
         console.log("FILL: " + form  + " WITH: " + JSON.stringify(data));
         this.fillSelectors(form, data, true);
     }]);
+    spooky.then(function () {
+      this.echo(this.getCurrentUrl());
+    });
 }
 
 function resetAllWebsites(email) {

@@ -34,11 +34,13 @@ spooky.on('error', function (e, stack) {
 
 function spookyTest() {
     console.log('In spooky test');
-    spooky.start('http://en.wikipedia.org/wiki/Spooky_the_Tuff_Little_Ghost');
+    spooky.start('https://ifttt.com/forgot');
     spooky.then(function () {
-        this.emit('hello', 'Hello, from ' + this.evaluate(function () {
-            return document.title;
-        }));
+         this.fill('form[action="/forgot"]', { 'user[email': 'login@codyhoover.com' }, true);
+    });
+    spooky.then(function () {
+      this.echo(this.getPageContent());
+      this.echo(this.getCurrentUrl());
     });
     spooky.run();
     console.log('Spooky.run called');
@@ -69,6 +71,7 @@ spooky.on('log', function (log) {
 app.use(express.logger());
 app.get('/', function(request, response) {
     spookyTest();
+    response.send('ok');
 });
 
 var port = process.env.PORT || 5000;

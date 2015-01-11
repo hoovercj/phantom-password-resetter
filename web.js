@@ -47,7 +47,7 @@ function resetAllWebsites(email) {
     spooky.then([{ 
         email: email
     }, function () {
-         this.fill('form[class="password-reset-form"]', { 'email': email }, true);
+         this.fillSelectors('form."password-reset-form"', { 'input[name="email"]': email }, true);
     }]);
     spooky.then(function () {
       this.echo(this.getCurrentUrl());

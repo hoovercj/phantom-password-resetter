@@ -20,7 +20,10 @@ var websites = {
     }
 };
 
-var spooky = new Spooky({
+var spooky = [];
+
+function initializeSpooky () {
+    spooky = new Spooky({
         child: {
             transport: 'http'
         },
@@ -35,6 +38,7 @@ var spooky = new Spooky({
             throw e;
         }
     });
+}
 
 spooky.on('error', function (e, stack) {
     console.error(e);
@@ -77,7 +81,6 @@ function addWebsiteStep(email, website) {
         form: website.form,
         data: data,
     }, function() {        
-        console.log("FILL: " + form  + " WITH: " + JSON.stringify(data));
         this.fillSelectors(form, data, true);
     }]);
     spooky.then(function () {
@@ -86,6 +89,7 @@ function addWebsiteStep(email, website) {
 }
 
 function resetAllWebsites(email) {
+    initializeSpooky();
     spooky.start();
     var keys = Object.keys(websites);
     for (var i=keys.length; i--;) {
@@ -124,8 +128,8 @@ app.get('/', function(reques, response) {
 
 app.get('/resetpassword/:email', function(request, response) {
     resetEmail = request.param('email');
-    resetAllWebsites(resetEmail);
     console.log('Resetting all passwords for: ' + resetEmail);
+    resetAllWebsites(resetEmail);
     response.send('Resetting all passwords for: ' + resetEmail);
 });
 

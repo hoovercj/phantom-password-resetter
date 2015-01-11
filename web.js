@@ -33,15 +33,20 @@ spooky.on('error', function (e, stack) {
 });
 
 function resetAllWebsites(email) {
-    console.log('In spooky test');
+    console.log('In resetAllWebsites for: ' + email);
     spooky.start('https://ifttt.com/forgot');
-    spooky.then(function (email) {
+    spooky.then([{ 
+        email: email
+    }, function () {
          this.fill('form[action="/forgot"]', { 'user[email]': email }, true);
-    });
+    }]);
     spooky.then(function () {
       this.echo(this.getCurrentUrl());
     });
-    spooky.thenOpen('https://www.dropbox.com/forgot', function(email) {
+    spooky.thenOpen('https://www.dropbox.com/forgot');
+    spooky.then([{ 
+        email: email
+    }, function () {
          this.fill('form[class="password-reset-form"]', { 'email': email }, true);
     });
     spooky.then(function () {

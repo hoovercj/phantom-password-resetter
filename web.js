@@ -44,7 +44,6 @@ function spookyTest() {
     console.log('Spooky.run called');
 }
 
-
 /*
 // Uncomment this block to see all of the things Casper has to say.
 // There are a lot.

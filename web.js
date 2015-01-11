@@ -12,11 +12,11 @@ var websites = {
     dropbox: {
         url: 'https://www.dropbox.com/forgot',
         form: 'form.password-reset-form',
-        input: 'input[name="email"]'
+        input: "input[name='email']"
     }, ifttt: {
         url: 'https://ifttt.com/forgot',
-        form: 'form[action="/forgot"]',
-        email: 'user[email]'
+        form: "form[action='/forgot']",
+        input: "input[name='user[email]']"
     }
 }
 

@@ -8,7 +8,7 @@ var Spooky = require('spooky');
 // [Getting Started]: https://devcenter.heroku.com/articles/getting-started-with-nodejs
 // [Spooky]: https://github.com/WaterfallEngineering/SpookyJS
 
-var websitesOld = {
+var websites = {
     dropbox: {
         url: 'https://www.dropbox.com/forgot',
         form: 'form.password-reset-form',
@@ -19,15 +19,6 @@ var websitesOld = {
         input: "input[name='user[email]']"
     }
 };
-
-var websites = {
-    ifttt: {
-        url: 'https://ifttt.com/forgot',
-        form: "form[action='/forgot']",
-        input: "input[name='user[email]']"
-    }
-};
-
 
 var spooky = new Spooky({
         child: {

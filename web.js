@@ -39,39 +39,6 @@ var websites = {
     }
 };
 
-
-// var websites = {
-//     dropbox: {
-//         url: 'https://www.dropbox.com/forgot',
-//         form: 'form.password-reset-form',
-//         input: "input[name='email']"
-//     }, github: {
-//         url: 'https://github.com/password_reset',
-//         form: "form[action='/password_reset']",
-//         input: "input[name='email']"
-//     }, heroku: {
-//         url: 'https://id.heroku.com/account/password/reset',
-//         form: "form[method='post']",
-//         input: "input[name='email']"
-//     }, ifttt: {
-//         url: 'https://ifttt.com/forgot',
-//         form: "form[action='/forgot']",
-//         input: "input[name='user[email]']"
-//     }, myspace: {
-//         url: 'https://myspace.com/forgotpassword',
-//         form: "form[action='/ajax/account/forgotpassword']",
-//         input: "input[name='email']"
-//     }, pinterest: {
-//         url: 'https://www.pinterest.com/password/reset/',
-//         form: 'form.standard-form',
-//         input: "input[name='email']",
-//     }, tumblr: {
-//         url: 'https://www.tumblr.com/forgot_password',
-//         form: "form[action='/forgot_password']",
-//         input: "input[name='email']"
-//     }
-// };
-
 var spooky = [];
 
 function resetAllWebsites (email) {

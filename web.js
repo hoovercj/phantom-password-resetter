@@ -41,7 +41,7 @@ function resetAllWebsites(email) {
     spooky.then(function () {
       this.echo(this.getCurrentUrl());
     });
-    casper.thenOpen('https://www.dropbox.com/forgot', function() {
+    spooky.thenOpen('https://www.dropbox.com/forgot', function() {
          this.fill('form[class="password-reset-form"]', { 'email': email }, true);
     });
     spooky.then(function () {

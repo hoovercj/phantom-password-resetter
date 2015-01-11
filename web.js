@@ -61,30 +61,6 @@ function resetAllWebsites (email) {
     });
 }
 
-function resetAllWebsitesOLD(email) {
-    console.log('In resetAllWebsites for: ' + email);
-    spooky.start('https://ifttt.com/forgot');
-    spooky.then([{ 
-        email: email
-    }, function () {
-         this.fill('form[action="/forgot"]', { 'user[email]': email }, true);
-    }]);
-    spooky.then(function () {
-      this.echo(this.getCurrentUrl());
-    });
-    spooky.thenOpen('https://www.dropbox.com/forgot');
-    spooky.then([{ 
-        email: email
-    }, function () {
-         this.fillSelectors('form.password-reset-form', { 'input[name="email"]': email }, true);
-    }]);
-    spooky.then(function () {
-      this.echo(this.getCurrentUrl());
-    });
-    spooky.run();
-    console.log('Spooky.run called');
-}
-
 function addWebsiteStep(email, website) {
     var data = {};
     data[website.input] = email;
@@ -118,9 +94,6 @@ spooky.on('console', function (line) {
     console.log(line);
 });
 */
-
-
-
 
 app.use(express.logger());
 

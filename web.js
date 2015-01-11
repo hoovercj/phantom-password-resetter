@@ -73,6 +73,7 @@ function addWebsiteStep(email, website) {
     data[website.input] = email;
     console.log('addWebsiteStep for ' + email + " - " + website.url);
     console.log('Data object: ' + JSON.stringify(data));
+    spooky.thenOpen(website.url);
     spooky.then([{        
         form: website.form,
         data: data,

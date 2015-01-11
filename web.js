@@ -7,15 +7,26 @@ var Spooky = require('spooky');
 // adoped from Heroku's [Getting Started][] and [Spooky][]'s sample
 // [Getting Started]: https://devcenter.heroku.com/articles/getting-started-with-nodejs
 // [Spooky]: https://github.com/WaterfallEngineering/SpookyJS
+
+// To Test:
+// - Hackernews
+// - MySpace
 var websites = {
     "dropbox": {
         "url": "https://www.dropbox.com/forgot",
         "form": "form.password-reset-form",
         "input": "input[name='email']"
+    }, "etsy": {
+        "url": "https://www.etsy.com/forgot_password.php",
+        "form": 
     }, "github": {
         "url": "https://github.com/password_reset",
         "form": "form[action='/password_reset']",
         "input": "input[name='email']"
+    }, " hackernews": {
+        "url": "https://news.ycombinator.com/forgot?id=",
+        "form": "form[action='/x']",
+        "input": "input"
     }, "heroku": {
         "url": "https://id.heroku.com/account/password/reset",
         "form": "form[method='post']",
@@ -24,6 +35,10 @@ var websites = {
         "url": "https://ifttt.com/forgot",
         "form": "form[action='/forgot']",
         "input": "input[name='user[email]']"
+    }, "imgur": {
+        "url": "https://imgur.com/signin/forgotpassword",
+        "form": "form#'form'",
+        "input": "input[name='username_email'"
     }, "myspace": {
         "url": "https://myspace.com/forgotpassword",
         "form": "form[action='/ajax/account/forgotpassword']",
@@ -80,6 +95,42 @@ function resetAllWebsites (email) {
     });
 }
 
+function resetWebsite(email, website) {
+    spooky = new Spooky({
+        child: {
+            transport: 'http'
+        },
+        casper: {
+            logLevel: 'debug',
+            verbose: true
+        }
+    }, function (err) {
+        if (err) {
+            e = new Error('Failed to initialize SpookyJS');
+            e.details = err;
+            throw e;
+        }
+
+        spooky.start();
+        addWebsiteStep(email, website);
+        spooky.run();
+    });
+
+    spooky.on('error', function (e, stack) {
+        console.error(e);
+
+        if (stack) {
+            console.log(stack);
+        }
+    });
+
+    spooky.on('log', function (log) {
+        if (log.space === 'remote') {
+            console.log(log.message.replace(/ \- .*/, ''));
+        }
+    });    
+}
+
 function addWebsiteStep(email, website) {
     var data = {};
     data[website.input] = email;
@@ -119,6 +170,15 @@ app.use(express.logger());
 // Web Server Method Block
 app.get('/', function(reques, response) {  
     response.send('Hello. Use the endpoint /resetpassword/:email to reset emails');
+});
+
+// Web Server TEST Method Block
+app.get('/resetpassword/test/', function(req, resp) {  
+    var resetEmail = req.param('email');
+    var testSite = req.param('site');
+    resetWebsite(resetEmail, websites[testSite]);
+    console.log('TEST: Resetting password for ' + resetEmail + " for " + testSite);
+    respond(resp, "Test: resetting password for " + resetEmail + " at the site " + testSite);
 });
 
 app.get('/resetpassword/:email', function(request, response) {

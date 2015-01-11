@@ -38,15 +38,21 @@ function initializeSpooky () {
             throw e;
         }
     });
+
+    spooky.on('error', function (e, stack) {
+        console.error(e);
+
+        if (stack) {
+            console.log(stack);
+        }
+    });
+
+    spooky.on('log', function (log) {
+        if (log.space === 'remote') {
+            console.log(log.message.replace(/ \- .*/, ''));
+        }
+    });
 }
-
-spooky.on('error', function (e, stack) {
-    console.error(e);
-
-    if (stack) {
-        console.log(stack);
-    }
-});
 
 function resetAllWebsitesOLD(email) {
     console.log('In resetAllWebsites for: ' + email);
@@ -105,18 +111,8 @@ spooky.on('console', function (line) {
     console.log(line);
 });
 */
-var gGreeting = 'Hello World';
 
-spooky.on('hello', function (greeting) {
-    console.log(greeting);
-    gGreeting = greeting;
-});
 
-spooky.on('log', function (log) {
-    if (log.space === 'remote') {
-        console.log(log.message.replace(/ \- .*/, ''));
-    }
-});
 
 
 app.use(express.logger());

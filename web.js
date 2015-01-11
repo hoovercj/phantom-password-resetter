@@ -32,14 +32,19 @@ spooky.on('error', function (e, stack) {
     }
 });
 
-function spookyTest() {
+function resetAllWebsites(email) {
     console.log('In spooky test');
     spooky.start('https://ifttt.com/forgot');
     spooky.then(function () {
-         this.fill('form[action="/forgot"]', { 'user[email]': 'login@codyhoover.com' }, true);
+         this.fill('form[action="/forgot"]', { 'user[email]': email }, true);
     });
     spooky.then(function () {
-      this.echo(this.getPageContent());
+      this.echo(this.getCurrentUrl());
+    });
+    casper.thenOpen('https://www.dropbox.com/forgot', function() {
+         this.fill('form[class="password-reset-form"]', { 'email': email }, true);
+    });
+    spooky.then(function () {
       this.echo(this.getCurrentUrl());
     });
     spooky.run();
@@ -69,9 +74,17 @@ spooky.on('log', function (log) {
 
 
 app.use(express.logger());
-app.get('/', function(request, response) {
-    spookyTest();
-    response.send('ok');
+
+// Web Server Method Block
+app.get('/', function(req, resp) {  
+    response.send('Hello. Use the endpoint /resetpassword/:email to reset emails');
+});
+
+app.get('/resetpassword/:email', function(request, response) {
+    resetEmail = req.param('email');
+    resetAllWebsites(resetEmail);
+    console.log('Resetting all passwords for: ' + resetEmail);
+    response.send('Resetting all passwords for: ' + resetEmail);
 });
 
 var port = process.env.PORT || 5000;

@@ -31,7 +31,7 @@ var websites = {
     }, "imgur": {
         "url": "https://imgur.com/signin/forgotpassword",
         "form": "form#'form'",
-        "input": "input[name='username_email'"
+        "input": "input[name='username_email']"
     }, "myspace": {
         "url": "https://myspace.com/forgotpassword",
         "form": "form[action='/ajax/account/forgotpassword']",
@@ -43,7 +43,7 @@ var websites = {
     }, "stackoverflow": {
         "url": "https://stackoverflow.com/users/account-recovery",
         "form": "form[action='/users/account-recovery']",
-        "input": "name='email']"
+        "input": "input[name='email']"
     }, "tumblr": {
         "url": "https://www.tumblr.com/forgot_password",
         "form": "form[action='/forgot_password']",
@@ -131,9 +131,9 @@ function resetWebsite(email, website) {
     // Uncomment this block to see all of the things Casper has to say.
     // There are a lot.
     // He has opinions.
-    spooky.on('console', function (line) {
-        console.log(line);
-    });    
+    //spooky.on('console', function (line) {
+    //    console.log(line);
+    //});    
 }
 
 function addWebsiteStep(email, website) {

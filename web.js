@@ -30,7 +30,7 @@ var websites = {
         "input": "input[name='user[email]']"
     }, "imgur": {
         "url": "https://imgur.com/signin/forgotpassword",
-        "form": "form#'form'",
+        "form": "#form",
         "input": "input[name='username_email']"
     }, "myspace": {
         "url": "https://myspace.com/forgotpassword",

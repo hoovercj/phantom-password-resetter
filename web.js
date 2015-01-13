@@ -20,10 +20,6 @@ var websites = {
         "url": "https://github.com/password_reset",
         "form": "form[action='/password_reset']",
         "input": "input[name='email']"
-    }, "hackernews": {
-        "url": "https://news.ycombinator.com/forgot?id=",
-        "form": "form[action='/x']",
-        "input": "input"
     }, "heroku": {
         "url": "https://id.heroku.com/account/password/reset",
         "form": "form[method='post']",
@@ -44,6 +40,10 @@ var websites = {
         "url": "https://www.pinterest.com/password/reset/",
         "form": "form.standardForm",
         "input": "input[name='email']"
+    }, "stackoverflow": {
+        "url": "https://stackoverflow.com/users/account-recovery",
+        "form": "form[action='/users/account-recovery']",
+        "input": "name='email']"
     }, "tumblr": {
         "url": "https://www.tumblr.com/forgot_password",
         "form": "form[action='/forgot_password']",
@@ -126,6 +126,13 @@ function resetWebsite(email, website) {
         if (log.space === 'remote') {
             console.log(log.message.replace(/ \- .*/, ''));
         }
+    });
+
+    // Uncomment this block to see all of the things Casper has to say.
+    // There are a lot.
+    // He has opinions.
+    spooky.on('console', function (line) {
+        console.log(line);
     });    
 }
 
@@ -154,14 +161,7 @@ function resetAllWebsitesHelper(email) {
     spooky.run();
 }
 
-/*
-// Uncomment this block to see all of the things Casper has to say.
-// There are a lot.
-// He has opinions.
-spooky.on('console', function (line) {
-    console.log(line);
-});
-*/
+
 
 app.use(express.logger());
 

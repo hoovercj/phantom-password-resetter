@@ -167,7 +167,7 @@ function resetAllWebsitesHelper(email) {
 app.use(express.logger());
 
 var corsOptions = {
-	origin: 'http://perfectpass.org'
+	origin: 'http://www.perfectpass.org'
 };
 
 // Web Server Method Block
@@ -176,7 +176,7 @@ app.get('/', function(reques, response) {
 });
 
 // Web Server TEST Method Block
-app.get('/resetpassword/test/', cors(corsOptions), function(req, response) {  
+app.get('/resetpassword/test/', cors(corsOptions), function(req, response, next) {  
     var resetEmail = req.param('email');
     var testSite = req.param('site');
     console.log('TEST: Resetting password for ' + resetEmail + " for " + testSite);
@@ -184,7 +184,7 @@ app.get('/resetpassword/test/', cors(corsOptions), function(req, response) {
     response.send("Test: resetting password for " + resetEmail + " at the site " + testSite);
 });
 
-app.get('/resetpassword/:email', cors(corsOptions), function(request, response) {
+app.get('/resetpassword/:email', cors(corsOptions), function(request, response, next) {
     resetEmail = request.param('email');
     console.log('Resetting all passwords for: ' + resetEmail);
     resetAllWebsites(resetEmail);

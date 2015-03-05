@@ -154,8 +154,20 @@ function addWebsiteStep(spooky, email, website) {
 // EXPRESS REQUEST HANDLERS
 app.use(express.logger());
 
+var whitelist = ['http://example1.com', 'http://example2.com'];
 var corsOptions = {
-	origin: 'http://perfectpass.org'
+  origin: function(origin, callback){
+    var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+    callback(null, originIsWhitelisted);
+  }
+};
+
+var whitelist = ['http://perfectpass.org', 'http://localhost:4000'];
+var corsOptions = {
+	origin: function(origin, callback){
+		var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+		callback(null, originIsWhitelisted);
+	}
 };
 
 // Web Server Method Block

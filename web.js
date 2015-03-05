@@ -52,10 +52,8 @@ var websites = {
     }
 };
 
-var spooky = [];
-
 function resetAllWebsites (email) {
-    spooky = new Spooky({
+    var spooky = new Spooky({
         child: {
             transport: 'http'
         },
@@ -73,7 +71,7 @@ function resetAllWebsites (email) {
         spooky.start();
         var keys = Object.keys(websites);
         for (var i=keys.length; i--;) {
-            addWebsiteStep(email, websites[keys[i]]);
+            addWebsiteStep(spooky, email, websites[keys[i]]);
         }
         spooky.run();
     });
@@ -95,7 +93,7 @@ function resetAllWebsites (email) {
 
 function resetWebsite(email, website) {
     console.log("Reset " + email + ": " + JSON.stringify(website));
-    spooky = new Spooky({
+    var spooky = new Spooky({
         child: {
             transport: 'http'
         },
@@ -111,7 +109,7 @@ function resetWebsite(email, website) {
         }
 
         spooky.start();
-        addWebsiteStep(email, website);
+        addWebsiteStep(spooky, email, website);
         spooky.run();
     });
 
@@ -137,7 +135,7 @@ function resetWebsite(email, website) {
     });    
 }
 
-function addWebsiteStep(email, website) {
+function addWebsiteStep(spooky, email, website) {
     var data = {};
     data[website.input] = email;
     console.log('addWebsiteStep for ' + email + " - " + website.url + " - " + JSON.stringify(data));    
@@ -153,21 +151,11 @@ function addWebsiteStep(email, website) {
     });
 }
 
-function resetAllWebsitesHelper(email) {
-    spooky.start();
-    var keys = Object.keys(websites);
-    for (var i=keys.length; i--;) {
-        addWebsiteStep(email, websites[keys[i]]);
-    }
-    spooky.run();
-}
-
-
-
+// EXPRESS REQUEST HANDLERS
 app.use(express.logger());
 
 var corsOptions = {
-	origin: 'http://www.perfectpass.org'
+	origin: 'http://perfectpass.org'
 };
 
 // Web Server Method Block
@@ -180,8 +168,12 @@ app.get('/resetpassword/test/', cors(corsOptions), function(req, response, next)
     var resetEmail = req.param('email');
     var testSite = req.param('site');
     console.log('TEST: Resetting password for ' + resetEmail + " for " + testSite);
-    resetWebsite(resetEmail, websites[testSite]);
-    response.send("Test: resetting password for " + resetEmail + " at the site " + testSite);
+    if (websites[testSite]) {
+    	resetWebsite(resetEmail, websites[testSite]);
+    	response.json({message: "Resetting password for " + resetEmail + " at the site " + testSite});
+	} else {
+		response.json({error: "Site not supported."});
+	}
 });
 
 app.get('/resetpassword/:email', cors(corsOptions), function(request, response, next) {

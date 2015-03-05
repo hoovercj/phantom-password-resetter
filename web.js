@@ -2,6 +2,7 @@
 
 var express = require("express");
 var app = express();
+var cors = require('cors')
 var Spooky = require('spooky');
 
 // adoped from Heroku's [Getting Started][] and [Spooky][]'s sample
@@ -165,13 +166,17 @@ function resetAllWebsitesHelper(email) {
 
 app.use(express.logger());
 
+var corsOptions = {
+	origin: 'http://perfectpass.org'
+};
+
 // Web Server Method Block
 app.get('/', function(reques, response) {  
     response.send('Hello. Use the endpoint /resetpassword/:email to reset emails');
 });
 
 // Web Server TEST Method Block
-app.get('/resetpassword/test/', function(req, response) {  
+app.get('/resetpassword/test/', cors(corsOptions), function(req, response) {  
     var resetEmail = req.param('email');
     var testSite = req.param('site');
     console.log('TEST: Resetting password for ' + resetEmail + " for " + testSite);
@@ -179,7 +184,7 @@ app.get('/resetpassword/test/', function(req, response) {
     response.send("Test: resetting password for " + resetEmail + " at the site " + testSite);
 });
 
-app.get('/resetpassword/:email', function(request, response) {
+app.get('/resetpassword/:email', cors(corsOptions), function(request, response) {
     resetEmail = request.param('email');
     console.log('Resetting all passwords for: ' + resetEmail);
     resetAllWebsites(resetEmail);
